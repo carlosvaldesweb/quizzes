@@ -9,9 +9,156 @@
   --ui-radius: 0.5rem;
 }
 
-@theme {
-  /* Your custom design tokens go here */
+/* ==========================================
+   GLASSMORPHISM
+   ========================================== */
+
+.glass {
+  @apply bg-white dark:bg-neutral-900/80 backdrop-blur-sm border border-neutral-200 dark:border-slate-700/30;
 }
+
+.glass-strong {
+  @apply bg-white/30 dark:bg-neutral-800/40 backdrop-blur-sm border border-neutral-100 dark:border-neutral-700;
+}
+
+/* ==========================================
+   GRADIENT MESH BACKGROUND
+   ========================================== */
+
+.gradient-mesh {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-mesh::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: oklch(62.8% 0.216 292.72);
+  filter: blur(150px);
+  opacity: 0.2;
+  top: -200px;
+  left: -100px;
+  animation: mesh-float 25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gradient-mesh::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: oklch(78.93% 0.153 85.81);
+  filter: blur(150px);
+  opacity: 0.15;
+  bottom: -150px;
+  right: -100px;
+  animation: mesh-float 25s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+.gradient-mesh-subtle::before {
+  opacity: 0.1;
+}
+
+.gradient-mesh-subtle::after {
+  opacity: 0.08;
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes mesh-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(50px, -30px) scale(1.1);
+  }
+  50% {
+    transform: translate(-30px, 50px) scale(0.9);
+  }
+  75% {
+    transform: translate(40px, 20px) scale(1.05);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+}
+.stagger-6 {
+  animation-delay: 0.6s;
+}
+
+/* ==========================================
+   GRADIENT TEXT
+   ========================================== */
+
+.text-gradient-primary {
+  background: linear-gradient(
+    135deg,
+    oklch(62.8% 0.216 292.72),
+    oklch(78.93% 0.153 85.81)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================
+   HOVER EFFECTS
+   ========================================== */
+
+.card-hover-lift {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+:is(.dark .card-hover-lift:hover) {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================
+   TRANSITIONS
+   ========================================== */
 
 .expand-enter-active,
 .expand-leave-active {
@@ -25,4 +172,231 @@
   opacity: 0;
   max-height: 0;
   transform: translateY(-10px);
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/* ==========================================
+   FLASHCARD 3D PERSPECTIVE
+   ========================================== */
+
+.perspective-container {
+  perspective: 1000px;
+}
+
+.flashcard-inner {
+  transform-style: preserve-3d;
+  animation: flashcard-flip 6s ease-in-out infinite;
+}
+
+.flashcard-face {
+  backface-visibility: hidden;
+}
+
+.flashcard-back {
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+@keyframes flashcard-flip {
+  0%,
+  35% {
+    transform: rotateY(0deg);
+  }
+  50%,
+  85% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* ==========================================
+   CARD DECK CYCLING
+   ========================================== */
+
+/* 9s total: each card is in front for 3s, then moves back */
+
+.card-deck-1 {
+  animation: deck-cycle-1 9s ease-in-out infinite;
+}
+
+.card-deck-2 {
+  animation: deck-cycle-2 9s ease-in-out infinite;
+}
+
+.card-deck-3 {
+  animation: deck-cycle-3 9s ease-in-out infinite;
+}
+
+/* Card 1: front → middle → back → front */
+@keyframes deck-cycle-1 {
+  0%,
+  30% {
+    z-index: 30;
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  33%,
+  63% {
+    z-index: 20;
+    transform: translateY(8px) rotate(3deg) scale(0.95);
+    opacity: 0.7;
+  }
+  66%,
+  96% {
+    z-index: 10;
+    transform: translateY(16px) rotate(6deg) scale(0.9);
+    opacity: 0.4;
+  }
+  100% {
+    z-index: 30;
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Card 2: middle → back → front → middle */
+@keyframes deck-cycle-2 {
+  0%,
+  30% {
+    z-index: 20;
+    transform: translateY(8px) rotate(3deg) scale(0.95);
+    opacity: 0.7;
+  }
+  33%,
+  63% {
+    z-index: 10;
+    transform: translateY(16px) rotate(6deg) scale(0.9);
+    opacity: 0.4;
+  }
+  66%,
+  96% {
+    z-index: 30;
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    z-index: 20;
+    transform: translateY(8px) rotate(3deg) scale(0.95);
+    opacity: 0.7;
+  }
+}
+
+/* Card 3: back → front → middle → back */
+@keyframes deck-cycle-3 {
+  0%,
+  30% {
+    z-index: 10;
+    transform: translateY(16px) rotate(6deg) scale(0.9);
+    opacity: 0.4;
+  }
+  33%,
+  63% {
+    z-index: 30;
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  66%,
+  96% {
+    z-index: 20;
+    transform: translateY(8px) rotate(3deg) scale(0.95);
+    opacity: 0.7;
+  }
+  100% {
+    z-index: 10;
+    transform: translateY(16px) rotate(6deg) scale(0.9);
+    opacity: 0.4;
+  }
+}
+
+/* ==========================================
+   THEME PREVIEW CYCLING
+   ========================================== */
+
+/* 9s total: each theme is active for 3s, then crossfades to the next */
+
+.theme-cycle-1 {
+  animation: theme-cycle-1 9s ease-in-out infinite;
+}
+
+.theme-cycle-2 {
+  animation: theme-cycle-2 9s ease-in-out infinite;
+}
+
+.theme-cycle-3 {
+  animation: theme-cycle-3 9s ease-in-out infinite;
+}
+
+@keyframes theme-cycle-1 {
+  0%,
+  28% {
+    opacity: 1;
+  }
+  33%,
+  94% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes theme-cycle-2 {
+  0%,
+  28% {
+    opacity: 0;
+  }
+  33%,
+  61% {
+    opacity: 1;
+  }
+  66%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-cycle-3 {
+  0%,
+  61% {
+    opacity: 0;
+  }
+  66%,
+  94% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================
+   SESSION PULSE INDICATOR
+   ========================================== */
+
+@keyframes pulse-live {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
+}
+
+.pulse-live {
+  animation: pulse-live 2s ease-in-out infinite;
 }
