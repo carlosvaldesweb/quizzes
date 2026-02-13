@@ -1,0 +1,45 @@
+name: Test & Style Checks
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main", "develop"]
+  workflow_dispatch:
+
+jobs:
+  nuxt-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Recommended for Nuxt 4
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm install
+
+      # --- Task 1: Type Check (TypeScript) ---
+      - name: TypeScript Check
+        run: npm run typecheck
+        # Fails if there are any TS errors.
+
+      # --- Task 2: Linting (ESLint) ---
+      - name: Lint Code
+        run: npm run lint
+        # Fails if ESLint rules are broken.
+
+      # --- Task 3: Formatting (Prettier) ---
+      - name: Check Formatting
+        run: npx prettier --check .
+        # Fails if files are not formatted.
+
+      # --- Task 4: Unit Tests (Vitest) ---
+      # TODO: Uncomment and configure when unit tests are available.
+      # - name: Run Unit Tests
+      #   run: npm run test

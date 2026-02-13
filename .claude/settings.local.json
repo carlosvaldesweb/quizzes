@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run typecheck)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run build)",
+      "Bash(npm run dev)",
+      "Bash(npx vitest:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(npm list:*)",
+      "Bash(npm outdated)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "WebFetch(domain:ui.nuxt.com)",
+      "mcp__nuxt-ui-remote__get-component",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(read:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "mcp__nuxt-ui-remote__get-component-metadata",
+      "Bash(git mv:*)",
+      "Bash(tree:*)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(php -l:*)",
+      "Bash(xargs:*)",
+      "mcp__nuxt-ui-remote__search-components-by-category",
+      "mcp__nuxt-ui-remote__list-components",
+      "Bash(npm run typecheck:*)"
+    ]
+  }
+}

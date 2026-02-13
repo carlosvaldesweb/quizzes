@@ -1,0 +1,41 @@
+name: Conventional Commit Validation
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Validate Pull Request Title Format
+        uses: amannn/action-semantic-pull-request@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            refactor
+            test
+            docs
+            chore
+            style
+          scopes: |
+            quizzes
+            sessions
+            participants
+            questions
+            practices
+            ui
+            config
+            auth
+            themes
+          requireScope: false
