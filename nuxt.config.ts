@@ -22,12 +22,16 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBaseUrl: "http://api.quizzes.test",
+      appName: process.env.APP_NAME || "puntic",
+      apiBaseUrl:
+        process.env.NUXT_PUBLIC_API_BASE_URL || "http://api.quizzes.test",
+      webappUrl:
+        process.env.NUXT_PUBLIC_WEBAPP_URL || "http://webapp.quizzes.test",
     },
   },
   vite: {
     server: {
-      allowedHosts: ["webapp.quizzes.test"],
+      allowedHosts: ["quizzes.test"],
     },
   },
 });
